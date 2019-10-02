@@ -1,0 +1,642 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="EduloopzUI.MasterPAge" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link href="Content/front_css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="Content/front_css/style.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script>$(document).ready(function () {
+            var current = 1, current_step, next_step, steps;
+            steps = $("fieldset").length;
+            $(".next").click(function () {
+                current_step = $(this).parent();
+                next_step = $(this).parent().next();
+                next_step.show();
+                current_step.hide();
+                setProgressBar(++current);
+            });
+            $(".previous").click(function () {
+                current_step = $(this).parent();
+                next_step = $(this).parent().prev();
+                next_step.show();
+                current_step.hide();
+                setProgressBar(--current);
+            });
+            setProgressBar(current);
+            // Change progress bar action
+            function setProgressBar(curStep) {
+                var percent = parseFloat(100 / steps) * curStep;
+                percent = percent.toFixed();
+                $(".progress-bar")
+                    .css("width", percent + "%")
+                    .html(percent + "%");
+            }
+        });
+    </script>
+    <style>
+        #regiration_form fieldset:not(:first-of-type) {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- top header -->
+        <asp:ScriptManager ID="src" runat="server"></asp:ScriptManager>
+        <div class="container-fluid hidden-xs">
+            <div class="row toprow">
+                <div class="topheader">
+                    <div class="col-md-4 contacttop">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <i class="fa fa-mobile is" aria-hidden="true"></i><a href="tel:+91-1234567896">+91-1234567896</a>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="mailto:support@eduloopz.com" target="_blank"><i class="fa fa-envelope is" aria-hidden="true"></i> &nbsp;support@eduloopz.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 emailtop">
+                        <a href="#myModal" data-toggle="modal">Login</a>
+                    </div>
+                    <!-- Login Modal -->
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content loginbg">
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <asp:UpdatePanel ID="up" runat="server" UpdateMode="Always">
+                                            <ContentTemplate>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="loginbox">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h3 class="text-center logimg">
+                                                                <img src="images/login-icon.png" /></h3>
+                                                            <hr />
+                                                            <div class="row rows">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label><b>Username</b></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                                                            <asp:TextBox ID="username" runat="server" CssClass="form-control" placeholder="Enter Username"></asp:TextBox>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label><b>Password</b></label>
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                                                            <asp:TextBox ID="password" TextMode="Password" runat="server" CssClass="form-control" placeholder="Enter Password"></asp:TextBox>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 text-left">
+                                                                    <asp:CheckBox ID="checkbox" runat="server" />
+                                                                    <b>Remember me</b>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 text-right">
+                                                                    <a href="#myModals" data-toggle="modal" data-dismiss="modal">Forgot Password</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row rows">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <asp:Label runat="server" ID="lblmessage"></asp:Label>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+                                                                <asp:LinkButton ID="login" runat="server" OnClick="btnlogin_click" CssClass="btn btn-info btn-block logbtn">Sign In  <i class="fa fa-sign-in" aria-hidden="true"></i></asp:LinkButton>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                                                        </div>
+                                                        <h6><span>OR</span></h6>
+                                                        <div class="row rows sociallog">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                                                <p><b>Login With your Social Media Account</b></p>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                                <asp:LinkButton ID="twitter" runat="server" CssClass="btn btn-facebook form-control"><i class="fa fa-facebook" aria-hidden="true"></i>   |   Facebook</asp:LinkButton>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                                <asp:LinkButton ID="LinkButton2" runat="server" CssClass="btn btn-google form-control"><i class="fa fa-google" aria-hidden="true"></i>  |   Google</asp:LinkButton>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                                                <p class="registern">Don't have an Account? <span>Register Now!</span></p>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                                                <a href="#myModals1" data-dismiss="modal" data-toggle="modal" class="btn btn-info logbtn">REGISTER</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Registration Modal -->
+                    <div class="modal" id="myModals1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!--Registration Modal body -->
+                                <div class="modal-body loginboxs ">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h3 class="text-center">Create Account</h3>
+                                                    <div class="row rows sociallog">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                                            <p>Get Start   with your Account</p>
+                                                        </div>
+                                                        <hr />
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 fbmargin">
+                                                            <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-facebook form-control"><i class="fa fa-facebook" aria-hidden="true"></i>   |   Facebook</asp:LinkButton>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <asp:LinkButton ID="LinkButton3" runat="server" CssClass="btn btn-google form-control"><i class="fa fa-google" aria-hidden="true"></i>  |   Google</asp:LinkButton>
+                                                        </div>
+                                                    </div>
+                                                    <h6><span>OR</span></h6>
+                                                    <div id="regiration_form">
+                                                        <fieldset>
+                                                            <h3>Company Information</h3>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Company Name</b></label>
+                                                                    <asp:TextBox ID="cname" runat="server" CssClass="form-control" placeholder="Company name"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Address</b></label>
+                                                                    <asp:TextBox ID="address" runat="server" CssClass="form-control" placeholder="Enter Email"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Country</b></label>
+                                                                    <asp:TextBox ID="country" runat="server" CssClass="form-control" placeholder="Enter Website"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>State</b></label>
+                                                                    <asp:TextBox ID="state" runat="server" CssClass="form-control" placeholder="Facebook page name"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>City</b></label>
+                                                                    <asp:TextBox ID="city" runat="server" CssClass="form-control" placeholder="Linkedin URl"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+															<div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Director Name</b></label>
+                                                                    <asp:TextBox ID="dname" runat="server" CssClass="form-control" placeholder="Linkedin URl"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+															<div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Email Id</b></label>
+                                                                    <asp:TextBox ID="email" runat="server" CssClass="form-control" placeholder="Linkedin URl"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+															<div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Contact Number</b></label>
+                                                                    <asp:TextBox ID="contact" runat="server" CssClass="form-control" placeholder="Linkedin URl"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+															<div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Password</b></label>
+                                                                    <asp:TextBox ID="password" runat="server" CssClass="form-control" placeholder="Linkedin URl"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+															<div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Confirm Password</b></label>
+                                                                    <asp:TextBox ID="cpassword" runat="server" CssClass="form-control" placeholder="Linkedin URl"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+															<div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <asp:Button ID="Button1" runat="server" CssClass="btn btn-info btn-block logbtn" Text="JOIN NOW" />
+                                                            </div>
+                                                            <!--<input type="button" name="password" class="next btn btn-info" style="float: right" value="Next" />-->
+                                                        </fieldset>
+                                                        <!--<fieldset>
+                                                            <h3>Contact Information</h3>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Country</b></label>
+                                                                    <asp:DropDownList ID="countrybusiness" runat="server" CssClass="form-control">
+                                                                        <asp:ListItem>Select Country</asp:ListItem>
+                                                                        <asp:ListItem>India</asp:ListItem>
+                                                                        <asp:ListItem>Afganistan</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Legal First Name</b></label>
+                                                                    <asp:TextBox ID="lfname" runat="server" CssClass="form-control" placeholder="Legal First Name"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Legal Last Name</b></label>
+                                                                    <asp:TextBox ID="lelname" runat="server" CssClass="form-control" placeholder="Legal Last Name"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Street Address</b></label>
+                                                                    <asp:TextBox ID="streetaddress" runat="server" CssClass="form-control" placeholder="Street Address"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>City</b></label>
+                                                                    <asp:TextBox ID="city" runat="server" CssClass="form-control" placeholder="City"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>State/Province</b></label>
+                                                                    <asp:TextBox ID="TextBox10" runat="server" CssClass="form-control" placeholder="State/Province"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control">
+                                                                        <asp:ListItem Value="AF">Afghanistan</asp:ListItem>
+                                                                        <asp:ListItem Value="AX">Åland Islands</asp:ListItem>
+                                                                        <asp:ListItem Value="AL">Albania</asp:ListItem>
+                                                                        <asp:ListItem Value="DZ">Algeria</asp:ListItem>
+                                                                        <asp:ListItem Value="AS">American Samoa</asp:ListItem>
+                                                                        <asp:ListItem Value="AD">Andorra</asp:ListItem>
+                                                                        <asp:ListItem Value="AO">Angola</asp:ListItem>
+                                                                        <asp:ListItem Value="AI">Anguilla</asp:ListItem>
+                                                                        <asp:ListItem Value="AQ">Antarctica</asp:ListItem>
+                                                                        <asp:ListItem Value="AG">Antigua and Barbuda</asp:ListItem>
+                                                                        <asp:ListItem Value="AR">Argentina</asp:ListItem>
+                                                                        <asp:ListItem Value="AM">Armenia</asp:ListItem>
+                                                                        <asp:ListItem Value="AW">Aruba</asp:ListItem>
+                                                                        <asp:ListItem Value="AU">Australia</asp:ListItem>
+                                                                        <asp:ListItem Value="AT">Austria</asp:ListItem>
+                                                                        <asp:ListItem Value="AZ">Azerbaijan</asp:ListItem>
+                                                                        <asp:ListItem Value="BS">Bahamas</asp:ListItem>
+                                                                        <asp:ListItem Value="BH">Bahrain</asp:ListItem>
+                                                                        <asp:ListItem Value="BD">Bangladesh</asp:ListItem>
+                                                                        <asp:ListItem Value="BB">Barbados</asp:ListItem>
+                                                                        <asp:ListItem Value="BY">Belarus</asp:ListItem>
+                                                                        <asp:ListItem Value="BE">Belgium</asp:ListItem>
+                                                                        <asp:ListItem Value="BZ">Belize</asp:ListItem>
+                                                                        <asp:ListItem Value="BJ">Benin</asp:ListItem>
+                                                                        <asp:ListItem Value="BM">Bermuda</asp:ListItem>
+                                                                        <asp:ListItem Value="BT">Bhutan</asp:ListItem>
+                                                                        <asp:ListItem Value="IN">India</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Postal Code</b></label>
+                                                                    <asp:TextBox ID="TextBox12" runat="server" CssClass="form-control" placeholder="Postal Code"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Phone No.</b></label>
+                                                                    <asp:TextBox ID="TextBox6" runat="server" CssClass="form-control" placeholder="Phone no"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Cell Phone</b></label>
+                                                                    <asp:TextBox ID="TextBox7" runat="server" CssClass="form-control" placeholder="Cell Phone"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Whatsapp Id</b></label>
+                                                                    <asp:TextBox ID="TextBox8" runat="server" CssClass="form-control" placeholder="Whatsapp id"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <input type="button" name="previous" class="previous btn btn-default" style="float: left" value="Previous" />
+                                                            <input type="button" name="next" class="next btn btn-info" style="float: right" value="Next" />
+                                                        </fieldset>
+                                                        <fieldset>
+                                                            <h3 style="color: #138496; text-align: center;">Recruitment Details</h3>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>When did you begin recruiting students?</b></label>
+                                                                    <asp:TextBox ID="TextBox9" runat="server" CssClass="form-control"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>What services do you provide to your clients?</b></label>
+                                                                    <asp:TextBox ID="TextBox11" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <select id="example-getting-started" multiple="multiple" class="form-control" data-placeholder="Select">
+                                                                        <option value="canadian schools represented">Canadian Schools Represented</option>
+                                                                        <option value="american schools represented">American Schools Represented</option>
+                                                                        <option value="represents other countries">Represents Other Countries</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>What educational associations or groups does your organization belong to?</b></label>
+                                                                    <asp:TextBox ID="TextBox14" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Where do you recruit from?</label>
+                                                                    <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-control">
+                                                                        <asp:ListItem>Select Country</asp:ListItem>
+                                                                        <asp:ListItem>India</asp:ListItem>
+                                                                        <asp:ListItem>Afganistan</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label><b>Company Logo</b></label>
+                                                                    <asp:FileUpload ID="TextBox16" runat="server"></asp:FileUpload>
+                                                                </div>
+                                                            </div>
+                                                            <input type="button" name="previous" class="previous btn btn-default" style="float: left" value="Previous" />
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <asp:Button ID="Button1" runat="server" CssClass="btn btn-info btn-block logbtn" Text="JOIN NOW" />
+                                                            </div>
+                                                        </fieldset>-->
+                                                    </div>
+                                                    <hr />
+                                                    <div class="row rows">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                                            <span>Already have an Account? <b>LogIn</b></span>
+                                                        </div>
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <p class="tcondition">By joining you agree <a href="#">Student Terms & Conditions, Privacy Policy</a> and <a href="#">Terms of Use.</a></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Forget Password Modal -->
+                    <div class="modal" id="myModals">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-body forgotpanel">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <p class="picon">
+                                                    <img src="images/lock.png" />
+                                                </p>
+                                                <h3>Forgot Password</h3>
+                                                <hr />
+                                                <div class="form-group">
+                                                    <label><b>Enter your email to reset your password</b></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                                        <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control" placeholder="Enter Your Email..."></asp:TextBox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <asp:Button ID="resetpwd" runat="server" Text="Reset My Password" CssClass="btn btn-primary btn-block" />
+                                            </div>
+                                            <div class="text-center">
+                                                <a href="Home.aspx"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar2">
+                        <span class="sr-only">Toggle navigation</span>
+                        Menu
+                    </button>
+                    <a class="navbar-brand" href="Home.aspx">
+                        <img src="img/logo.png" alt="Eduloopz Logo" /></a>
+                </div>
+                <div id="navbar2" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">About</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Courses <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Course 1</a></li>
+                                <li><a href="#">Course 2</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Events <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Events 1</a></li>
+                                <li><a href="#">Events 2</a></li>
+                            </ul>
+                        </li>
+                       <%-- <li><a href="#">Blog</a></li>--%>
+                        <li><a href="#">Contact</a></li>
+                       <%-- <li class="text-right"><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>--%>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar Area -->
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>Top Colleges</h4>
+                        <hr class="style14">
+                        <ul>
+                            <li><a href="#">1. College 1</a></li>
+                            <li><a href="#">2. College 2</a></li>
+                            <li><a href="#">3. College 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Quick Links</h4>
+                        <hr class="style14">
+                        <ul>
+                            <li><a href="#">1. College 1</a></li>
+                            <li><a href="#">2. College 2</a></li>
+                            <li><a href="#">3. College 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Features</h4>
+                        <hr class="style14">
+                        <ul>
+                            <li><a href="#">1. College 1</a></li>
+                            <li><a href="#">2. College 2</a></li>
+                            <li><a href="#">3. College 3</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <div class="footerbar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Copyright © 2019 All right reserved</p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p>Developed By : S S Solutions Info Technologies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(document).ready(function () {
+
+            var select = $('select[multiple]');
+            var options = select.find('option');
+
+            var div = $('<div />').addClass('selectMultiple');
+            var active = $('<div />');
+            var list = $('<ul />');
+            var placeholder = select.data('placeholder');
+
+            var span = $('<span />').text(placeholder).appendTo(active);
+
+            options.each(function () {
+                var text = $(this).text();
+                if ($(this).is(':selected')) {
+                    active.append($('<a />').html('<em>' + text + '</em><i></i>'));
+                    span.addClass('hide');
+                } else {
+                    list.append($('<li />').html(text));
+                }
+            });
+
+            active.append($('<div />').addClass('arrow'));
+            div.append(active).append(list);
+
+            select.wrap(div);
+
+            $(document).on('click', '.selectMultiple ul li', function (e) {
+                var select = $(this).parent().parent();
+                var li = $(this);
+                if (!select.hasClass('clicked')) {
+                    select.addClass('clicked');
+                    li.prev().addClass('beforeRemove');
+                    li.next().addClass('afterRemove');
+                    li.addClass('remove');
+                    var a = $('<a />').addClass('notShown').html('<em>' + li.text() + '</em><i></i>').hide().appendTo(select.children('div'));
+                    a.slideDown(400, function () {
+                        setTimeout(function () {
+                            a.addClass('shown');
+                            select.children('div').children('span').addClass('hide');
+                            select.find('option:contains(' + li.text() + ')').prop('selected', true);
+                        }, 500);
+                    });
+                    setTimeout(function () {
+                        if (li.prev().is(':last-child')) {
+                            li.prev().removeClass('beforeRemove');
+                        }
+                        if (li.next().is(':first-child')) {
+                            li.next().removeClass('afterRemove');
+                        }
+                        setTimeout(function () {
+                            li.prev().removeClass('beforeRemove');
+                            li.next().removeClass('afterRemove');
+                        }, 200);
+
+                        li.slideUp(400, function () {
+                            li.remove();
+                            select.removeClass('clicked');
+                        });
+                    }, 600);
+                }
+            });
+
+            $(document).on('click', '.selectMultiple > div a', function (e) {
+                var select = $(this).parent().parent();
+                var self = $(this);
+                self.removeClass().addClass('remove');
+                select.addClass('open');
+                setTimeout(function () {
+                    self.addClass('disappear');
+                    setTimeout(function () {
+                        self.animate({
+                            width: 0,
+                            height: 0,
+                            padding: 0,
+                            margin: 0
+                        }, 300, function () {
+                            var li = $('<li />').text(self.children('em').text()).addClass('notShown').appendTo(select.find('ul'));
+                            li.slideDown(400, function () {
+                                li.addClass('show');
+                                setTimeout(function () {
+                                    select.find('option:contains(' + self.children('em').text() + ')').prop('selected', false);
+                                    if (!select.find('option:selected').length) {
+                                        select.children('div').children('span').removeClass('hide');
+                                    }
+                                    li.removeClass();
+                                }, 400);
+                            });
+                            self.remove();
+                        })
+                    }, 300);
+                }, 400);
+            });
+
+            $(document).on('click', '.selectMultiple > div .arrow, .selectMultiple > div span', function (e) {
+                $(this).parent().parent().toggleClass('open');
+            });
+
+        });
+
+    </script>
+</body>
+</html>
